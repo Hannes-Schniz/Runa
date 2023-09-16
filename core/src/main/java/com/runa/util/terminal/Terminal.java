@@ -42,20 +42,19 @@ public final class Terminal {
      * @throws EndGameException the end game exception
      */
     public static int selectTarget(String name, int max, boolean hasToSelect) throws EndGameException {
-        printSelect(name, max); //prints the select message
+        printSelect(name, max); // prints the select message
         int parsed;
         try {
-            parsed = Parser.getSelected(READER.readLine(), max); //parses the input
+            parsed = Parser.getSelected(READER.readLine(), max); // parses the input
         } catch (IOException ex) {
-            return selectTarget("number", max, hasToSelect);
+            return selectTarget(name, max, hasToSelect);
         }
-        if (parsed != -ONE) { //if the input was correct returns the input -1
+        if (parsed != -ONE) { // if the input was correct returns the input -1
             return parsed - ONE;
-        }
-        else if (!hasToSelect) { //if the input wasn't correct but the player doesn't need to select returns -1
+        } else if (!hasToSelect) { // if the input wasn't correct but the player doesn't need to select returns -1
             return -1;
         }
-        return selectTarget("number", max, hasToSelect); //recurrs to make sure the player makes an input
+        return selectTarget(name, max, hasToSelect); // recurrs to make sure the player makes an input
     }
 
     /**
@@ -73,18 +72,17 @@ public final class Terminal {
         System.out.println("Enter " + name + " [1--" + max + "] separated by comma:");
         List<Integer> parsed = new ArrayList<>();
         try {
-            parsed = Parser.parseMulti(READER.readLine(), max); //parses the input
+            parsed = Parser.parseMulti(READER.readLine(), max); // parses the input
         } catch (IOException ex) {
             selectMultiTarget(max, amount, exact, name);
         }
-        if (parsed != null && parsed.size() == amount) { //if the player made a correct input returns the parsed input
+        if (parsed != null && parsed.size() == amount) { // if the player made a correct input returns the parsed input
             return parsed;
-        }
-        else if (parsed != null && parsed.size() < amount && !exact) { //if the input doesn't need to be exact returns
+        } else if (parsed != null && parsed.size() < amount && !exact) { // if the input doesn't need to be exact
+                                                                         // returns
             return parsed;
-        }
-        else {
-            return selectMultiTarget(max, amount, exact, name); //recurrs to make sure that the player makes an input
+        } else {
+            return selectMultiTarget(max, amount, exact, name); // recurrs to make sure that the player makes an input
         }
     }
 
@@ -99,6 +97,10 @@ public final class Terminal {
         System.out.println("3) Paladin");
     }
 
+    public static void printWin() {
+        System.out.println("Runa Wins!");
+    }
+
     /**
      * Print ability string.
      *
@@ -106,7 +108,7 @@ public final class Terminal {
      * @return the string
      */
     public static String printAbility(Ability input) {
-        return  input.getName() + "(" + input.getAbilityLevel() + ")";
+        return input.getName() + "(" + input.getAbilityLevel() + ")";
     }
 
     /**
@@ -161,7 +163,7 @@ public final class Terminal {
         printLine();
         System.out.println(printRuna(runa, true));
         System.out.println("vs.");
-        for (Monster monster: monsterList) {
+        for (Monster monster : monsterList) {
             printMonster(monster);
         }
         printLine();
